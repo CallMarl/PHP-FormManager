@@ -1,9 +1,9 @@
 <?php
 
-namespace Src\Modeles\Form_Manager\Control;
+namespace Form_Manager\Control;
 
-use Src\Modeles\Form_Manager\Error_Manager;
-use Src\Modeles\Form_Manager\Field_Manager;
+use Form_Manager\Error_Manager;
+use Form_Manager\Field_Manager;
 
 abstract class Abstract_Control
 {

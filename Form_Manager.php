@@ -1,16 +1,16 @@
 <?php
 
-namespace Src\Modeles\Form_manager;
+namespace Form_manager;
 
-use Src\Modeles\Form_manager\Manager_Trait;
-use Src\Modeles\Form_manager\Error_Manager;
+use Form_manager\Manager_Trait;
+use Form_manager\Error_Manager;
 
-use Src\Modeles\Form_manager\Field\Text;
-use Src\Modeles\Form_manager\Field\Password;
-use Src\Modeles\Form_manager\Field\Select;
-use Src\Modeles\Form_manager\Field\Submit;
-use Src\Modeles\Form_manager\Field\Option;
-use Src\Modeles\Form_manager\Field\Unknow;
+use Form_manager\Field\Text;
+use Form_manager\Field\Password;
+use Form_manager\Field\Select;
+use Form_manager\Field\Submit;
+use Form_manager\Field\Option;
+use Form_manager\Field\Unknow;
 
 class Form_Manager
 {

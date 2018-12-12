@@ -1,9 +1,9 @@
 <?php
 
-namespace Src\Modeles\Form_Manager\Control;
+namespace Form_Manager\Control;
 
-use Src\Modeles\Form_Manager\Field_Manager;
-use Src\Modeles\Form_Manager\Control\Abstract_Control;
+use Form_Manager\Field_Manager;
+use Form_Manager\Control\Abstract_Control;
 
 class Interval extends Abstract_Control
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\Modeles\Form_Manager;
+namespace Form_Manager;
 
 trait Manager_Trait
 {

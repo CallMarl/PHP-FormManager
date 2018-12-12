@@ -1,11 +1,11 @@
 <?php
 
-namespace Src\Modeles\Form_manager;
+namespace Form_manager;
 
-use Src\Modeles\Form_manager\Manager_Trait;
-use Src\Modeles\Form_manager\Regex_Manager;
-use Src\Modeles\Form_manager\Control_Manager;
-use Src\Modeles\Form_manager\Error_Manager;
+use Form_manager\Manager_Trait;
+use Form_manager\Regex_Manager;
+use Form_manager\Control_Manager;
+use Form_manager\Error_Manager;
 
 abstract class Field_Manager
 {

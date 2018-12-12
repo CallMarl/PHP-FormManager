@@ -1,8 +1,8 @@
 <?php
 
-namespace Src\Modeles\Form_Manager;
+namespace Form_Manager;
 
-use Src\Modeles\Form_Manager\Form_manager;
+use Form_Manager\Form_manager;
 
 Abstract class Gabarit extends Form_manager
 {

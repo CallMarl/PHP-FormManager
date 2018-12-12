@@ -1,8 +1,8 @@
 <?php
 
-namespace Src\Modeles\Form_Manager;
+namespace Form_Manager;
 
-use Src\Modeles\Form_Manager\Regex\Specific;
+use Form_Manager\Regex\Specific;
 
 class Regex_Manager
 {

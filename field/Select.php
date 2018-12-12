@@ -1,10 +1,10 @@
 <?php
 
-namespace Src\Modeles\Form_Manager\Field;
+namespace Form_Manager\Field;
 
-use Src\Modeles\Form_Manager\Field_Manager;
+use Form_Manager\Field_Manager;
 
-use Src\Modeles\Form_Manager\Field\Option;
+use Form_Manager\Field\Option;
 
 class Select extends Field_Manager
 {

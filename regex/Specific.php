@@ -1,8 +1,8 @@
 <?php
 
-namespace Src\Modeles\Form_Manager\Regex;
+namespace Form_Manager\Regex;
 
-use Src\Modeles\Form_Manager\Regex\Abstract_Regex;
+use Form_Manager\Regex\Abstract_Regex;
 
 class Specific extends Abstract_Regex
 {

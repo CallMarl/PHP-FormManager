@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\Modeles\Form_Manager\Regex;
+namespace Form_Manager\Regex;
 
 class Alpha extends Abstract_Regex
 {
