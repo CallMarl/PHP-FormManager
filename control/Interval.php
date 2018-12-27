@@ -25,9 +25,8 @@ class Interval extends Abstract_Control
             $this->max = intval($args[1]);
         }
         else
-        {
-            #throw exception Interval class word with: one min value, one max value.
-        }
+            throw new \Exception("For a Interval control you must spécifies min and max value in args.", 1);
+
     }
 
     public function is_valid()

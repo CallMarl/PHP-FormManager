@@ -22,11 +22,6 @@ abstract class Field_Manager
         /**
         *   @var bool
         */
-        private $require;
-
-        /**
-        *   @var bool
-        */
         private $persist;
 
         /**
@@ -38,23 +33,34 @@ abstract class Field_Manager
         /**
         *   @var Error_Manager
         */
-        private $error;
+        protected $error;
+
+        /**
+        *   @var string
+        */
+        private $type;
 
         use Manager_Trait;
 
         public function __construct($name)
         {
             $this->name = $name;
+            $this->type = strtolower(end(explode("\\", get_class($this))));
             $this->add_attr("name", $this->name);
-            $this->type = end(explode("\\", get_class($this)));
             $this->add_attr("type", $this->type);
-            $this->require = FALSE;
-            $this->persist = FALSE;
+            $this->persist();
         }
 
         public function get_name()
         {
             return ($this->name);
+        }
+
+        public function get_attr($type)
+        {
+            if (isset($this->attr[$type]))
+                return ($this->attr[$type]);
+            return (NULL);
         }
 
         public function add_class($css_class)
@@ -70,7 +76,7 @@ abstract class Field_Manager
         {
             if (array_key_exists($html_attr, $this->attr))
             {
-                throw new \Exception("The attribut" . $html_attr . "is
+                throw new \Exception("The attribut " . $html_attr . " is
                                      already added use set_attr() function
                                      to update it", 1);
             }
@@ -114,23 +120,11 @@ abstract class Field_Manager
             return ($this);
         }
 
-        public function add_control($control, $args)
+        public function add_control($control, $args = [])
         {
             $control = new Control_Manager($this, $control, $args);
             $this->checker[] = $control;
-            return ($this);
-        }
-
-        public function add_error($error)
-        {
-            if (empty($this->checker))
-            {
-                throw new \Exception("Error, to set an error a checker
-                                      must be set before.", 1);
-            }
-            $checker = end($this->checker);
-            $checker->add_error($error);
-            return ($this);
+            return (end($this->checker));
         }
 
         public function is_valid()
@@ -140,37 +134,52 @@ abstract class Field_Manager
             {
                 if (!$value->is_valid())
                 {
-                    $this->error = $value->get_error();
+                    $this->error = new Error_Manager($value->get_error());
                     $no_error = FALSE;
                     break ;
                 }
             }
-            if (($no_error == TRUE || $this->persist === FALSE)
-            && strcmp($this->type, "submit"))
-            {
+            if ($no_error == FALSE)
+                    $this->error->set_faild();
+            if ($no_error == FALSE || $this->persist == FALSE)
                 $this->unset_attr("value");
-            }
             return ($no_error);
         }
 
         public function get_error()
         {
-            if ($this->error != NULL)
-                return ($this->error);
+            if (isset($this->error) && $this->error->is_faild())
+                return ($this->error->get_error());
         }
 
         public function persist()
         {
-            $this->persist = TRUE;
+            if ($this->persist == TRUE)
+                $this->persist = FALSE;
+            else
+                $this->persist = TRUE;
             return ($this);
         }
 
-        public function require()
+        public function is_persist()
         {
-            $this->add_attr("require");
-            $this->require = TRUE;
+            return ($this->persist);
+        }
+
+        public function disabled()
+        {
+            if ($this->get_attr("disabled") == NULL)
+                $this->add_attr("disabled");
             return ($this);
         }
+
+        public function is_disabled()
+        {
+            if ($this->get_attr("disabled") !== NULL)
+                return (TRUE);
+            return (FALSE);
+        }
+
 
         public function get_html()
         {

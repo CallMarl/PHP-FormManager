@@ -13,14 +13,14 @@ class Min extends Abstract_Control
     */
     private $min;
 
-    public function __construct(Field_Manager $field, $args){
+    public function __construct(Field_Manager $field, $args)
+    {
         parent::__construct($field);
-        if(count($args) === 2)
+        if(count($args) === 1)
             $this->min = intval($args[0]);
         else
-        {
-            #throw exception Interval class word with: one min value.
-        }
+            throw new \Exception("For a min control you must spécifies min value in args.", 1);
+
     }
 
     public function is_valid()

@@ -27,7 +27,12 @@ abstract class Abstract_Control
         return ($this->field);
     }
 
-    public function add_error($error)
+    public function set_faild()
+    {
+        $this->error->set_faild();
+    }
+
+    public function set_error($error)
     {
         $this->error = new Error_Manager($error);
         return ($this->get_field());

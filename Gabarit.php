@@ -22,5 +22,5 @@ Abstract class Gabarit extends Form_manager
         return ($this->name);
     }
 
-    abstract function load_form();
+    abstract function load();
 }

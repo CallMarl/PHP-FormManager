@@ -13,14 +13,13 @@ class Max extends Abstract_Control
     */
     private $max;
 
-    public function __construct(Field_Manager $field, $args){
+    public function __construct(Field_Manager $field, $args)
+    {
         parent::__construct($field);
         if(count($args) === 2)
             $this->max = intval($args[0]);
         else
-        {
-            #throw exception Interval class word with:  one max value.
-        }
+            throw new \Exception("For a max control you must spécifies max value in args.", 1);
     }
 
     public function is_valid()

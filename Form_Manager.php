@@ -5,11 +5,12 @@ namespace Form_manager;
 use Form_manager\Manager_Trait;
 use Form_manager\Error_Manager;
 
-use Form_manager\Field\Text;
+use Form_manager\Field\Date;
+use Form_manager\Field\Option;
 use Form_manager\Field\Password;
 use Form_manager\Field\Select;
 use Form_manager\Field\Submit;
-use Form_manager\Field\Option;
+use Form_manager\Field\Text;
 use Form_manager\Field\Unknow;
 
 class Form_Manager
@@ -34,7 +35,7 @@ class Form_Manager
     public function __construct()
     {
         $this->set_action("#");
-        $this->set_method('get');
+        $this->set_get('get');
         $this->error = new Error_Manager('To edit this message you can use set_
                                          error() function or remove it with the
                                          unset_error() function.');
@@ -52,11 +53,19 @@ class Form_Manager
         $this->fields[$name] = $type;
     }
 
-    public function add_text($name)
+    public function add_date($name)
     {
-        $this->add_field($name, "text");
+        $this->add_field($name, "date");
         $field_name = strtolower($name);
-        $this->$field_name = new Text($name);
+        $this->$field_name = new Date($name);
+        return ($this);
+    }
+
+    public function add_option($name)
+    {
+        $this->add_field($name, "option");
+        $field_name = strtolower($name);
+        $this->$field_name = new Option($name);
         return ($this);
     }
 
@@ -76,14 +85,6 @@ class Form_Manager
         return ($this);
     }
 
-    public function add_option($name)
-    {
-        $this->add_field($name, "option");
-        $field_name = strtolower($name);
-        $this->$field_name = new Option($name);
-        return ($this);
-    }
-
     public function add_submit($name)
     {
         $this->add_field($name, "submit");
@@ -92,9 +93,17 @@ class Form_Manager
         return ($this);
     }
 
+    public function add_text($name)
+    {
+        $this->add_field($name, "text");
+        $field_name = strtolower($name);
+        $this->$field_name = new Text($name);
+        return ($this);
+    }
+
     public function add_unknow($name, $type)
     {
-        if (in_array($type, ['text', 'password', 'select', 'submit']))
+        if (in_array($type, ['text', 'password', 'select', 'submit', 'date', 'option']))
         {
             throw new \Exception("There is a specific functionfor this type : "
                                   . $type, 1);
@@ -115,46 +124,50 @@ class Form_Manager
         unset($this->error);
     }
 
-    private function check_form($post)
-    {
-        reset($this->fields);
-        foreach ($post as $key => $value)
-        {
-            if (strcmp($key, current($this->field)))
-                return (FALSE);
-            next($this->field);
-        }
-    }
-
     public function is_valid($post, $hard = TRUE)
     {
-        $no_error = TRUE;
-        reset($post);
-        foreach ($fields as $name => $type)
+        reset($this->fields);
+        $tmp = TRUE;
+        $tmp_post = $post;
+        foreach ($this->fields as $key => $value)
         {
-            if ($hard == TRUE && !strcmp($name, current($post)))
-                $no_error = FALSE;
-            else
-                $this->$name->set_attr("value", current($post));
-            if (!$this->$name->is_valid())
-                $no_error = FALSE;
-            next($post);
+            if (array_key_exists($key, $tmp_post))
+            {
+                if($hard == TRUE && strcmp($tmp_post[$key], current($tmp_post)))
+                {
+                    $this->error->set_faild();
+                    $tmp = FALSE;
+                }
+                $this->$key->set_attr("value", $tmp_post[$key]);
+                unset($tmp_post[$key]);
+            }
+            if (!$this->$key->is_valid())
+                $tmp = FALSE;
         }
-        return ($error);
+        if ($hard == TRUE && !empty($tmp_post))
+        {
+            $this->error->set_faild();
+            $tmp = FALSE;
+        }
+        return ($tmp);
     }
 
-    public function set_method($method)
+    public function set_post()
     {
-        $method = strtolower($method);
-        if (!in_array($method, ['post', 'get']))
-            throw new \Exception("For a form method attribut could be only get
-                                  or post", 1);
-        $this->attr['method'] = $method;
+        $this->attr['method'] = 'post';
+        return ($this);
+    }
+
+    public function set_get()
+    {
+        $this->attr['method'] = 'get';
+        return ($this);
     }
 
     public function set_action($action)
     {
         $this->attr['action'] = $action;
+        return ($this);
     }
 
     public function start()
