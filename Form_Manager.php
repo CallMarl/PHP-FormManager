@@ -35,7 +35,7 @@ class Form_Manager
     public function __construct()
     {
         $this->set_action("#");
-        $this->set_get('get');
+        $this->set_get();
         $this->error = new Error_Manager('To edit this message you can use set_
                                          error() function or remove it with the
                                          unset_error() function.');
@@ -175,6 +175,11 @@ class Form_Manager
         echo("<form " . $this->attr_to_string() . " >");
     }
 
+    public function end()
+    {
+        echo("</form>");
+    }
+
     public function get_html()
     {
         $html = "";
@@ -192,8 +197,13 @@ class Form_Manager
             $this->$key->display();
     }
 
-    public function end()
+    public function get_error()
     {
-        echo("</form>");
+        return ($this->error->get_error());
+    }
+
+    public function display_error()
+    {
+        echo($this->error->get_error());
     }
 }
