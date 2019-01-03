@@ -46,6 +46,8 @@ abstract class Field_Manager
         {
             $this->name = $name;
             $this->type = strtolower(end(explode("\\", get_class($this))));
+            $this->error = new Error_Manager("The field " . $this->name .
+                                             " was modified");
             $this->add_attr("name", $this->name);
             $this->add_attr("type", $this->type);
             $this->persist();
@@ -70,6 +72,17 @@ abstract class Field_Manager
                 $this->css[] = $css_class;
             }
             return ($this);
+        }
+
+        public function set_error($error_message)
+        {
+            $this->error = new Error_Manager($error_message);
+            return ($this);
+        }
+
+        public function unset_error()
+        {
+            unset($this->error);
         }
 
         public function add_attr($html_attr, $value = NULL)
@@ -152,6 +165,11 @@ abstract class Field_Manager
                 return ($this->error->get_error());
         }
 
+        public function display_error()
+        {
+            echo($this->get_error());
+        }
+
         public function persist()
         {
             if ($this->persist == TRUE)
@@ -179,7 +197,6 @@ abstract class Field_Manager
                 return (TRUE);
             return (FALSE);
         }
-
 
         public function get_html()
         {

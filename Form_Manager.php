@@ -199,11 +199,12 @@ class Form_Manager
 
     public function get_error()
     {
-        return ($this->error->get_error());
+        if (isset($this->error) && $this->error->is_faild())
+            return ($this->error->get_error());
     }
 
     public function display_error()
     {
-        echo($this->error->get_error());
+        echo($this->get_error());
     }
 }
