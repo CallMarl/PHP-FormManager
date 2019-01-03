@@ -2,9 +2,7 @@
 
 namespace Form_manager;
 
-use Form_manager\Manager_Trait;
 use Form_manager\Error_Manager;
-
 use Form_manager\Field\Date;
 use Form_manager\Field\Option;
 use Form_manager\Field\Password;
@@ -30,7 +28,7 @@ class Form_Manager
     */
     private $error;
 
-    use Manager_Trait;
+    use Form_manager\Manager_Trait;
 
     public function __construct()
     {

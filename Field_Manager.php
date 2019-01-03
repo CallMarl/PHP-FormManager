@@ -2,7 +2,6 @@
 
 namespace Form_manager;
 
-use Form_manager\Manager_Trait;
 use Form_manager\Regex_Manager;
 use Form_manager\Control_Manager;
 use Form_manager\Error_Manager;
@@ -40,7 +39,7 @@ abstract class Field_Manager
         */
         private $type;
 
-        use Manager_Trait;
+        use Form_manager\Manager_Trait;
 
         public function __construct($name)
         {
