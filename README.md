@@ -237,7 +237,11 @@ class My_Gabarit extends Gabarit
 ```
 
 ### Spécifier un message d'erreur pour le champs.
-...
+
+Il est possible de définir un message d'erreur pour un champs, car il existe des cas ou le champs mis à part sont contenu peu générer une erreur. Afin de modifier ce message d'erreur, vous pouvez utiliser la méthode ``set_error($error_message)`` par défaut le message d'erreur est ``The field "name of field" was modified"`` . Si vous souhaitez supprimer ce message d'erreur, vous pouvez utilisez la méthode ``unset_error()``.
+
+Vous pouvez récupérer le message d'erreur via les méthodes ``get_error()`` qui retourne l'erreur sous la forme d'une chaîne de caractère ou via ``display_error()`` qui affiche directement le message d'erreur.
+
 ### Ajouter des contrôles
 
 Afin d'ajouter des contrôles au champs, il faut utiliser la méthode ``add_control($control, $args = [])`` cette méthode prends en paramètre le nom du contrôle et un tableau d'arguments le nombre d'élément dans ce tableau peu varié en fonction du type de contrôle demandé.
@@ -256,15 +260,17 @@ public function load()
 ```
 
 ### Ajouter des regex
-...
-### Spécifier des messages d'erreurs au contrôle et au regex.
-...
+
+Afin de spécifier une regex pour un champs, vous pouvez utiliser la méthode ``add_regex($regex_name, $specific = FALSE)``. ``$regex_name`` peut être soit le nom d'une regex existante pour cela se référer à la liste en bas de page, soit une regex définit par vos soin dans ce second cas il est important de mettre la valeur spécifique a TRUE.
+
 ### Vérifier le champs
 
 Il n'existe pas de méthode spécifique pour contrôler le champs indépendamment du formulaire. Afin de contrôler la validité du champs, il suffit de passer par le méthode ``is_valid()`` du formulaire.
 
 ### Quelques méthode supplémentaires
-...
+
+Il existe quelques méthodes supplémentaire afin d'améliorer la gestion de champs de formulaire. Les méthodes ``persist()`` et ``is_persist()`` l'une renvois l'état du boolean persiste tant-dis que l'autre inverse son état. Si ``is_persist()`` vaut TRUE la valeur d'une champs sera conserver si aucune erreur n'est détecté.
+
 ## Liste des champs de formulaire
 
  - Date =>  ``add_date($name);``
@@ -349,13 +355,12 @@ public function load()
 
 ## Liste des contrôles champs existants
 
- - Interval
- - Require
- - Max
- - Min
+ - Interval : une intervalle pour la longueur d'une chaine de caractère.
+ - Require : une règle qui force le champs à être requis.
+ - Max : la longueur max pour une chaine de caractère.
+ - Min : la longueur minimal pour une chaine de caractère.
 
 ## Liste des regex de champs existantes
 
- - Alpha
- - Mail
- - Specific
+ - Alpha : des caractères uniquement alphabétique.
+ - Mail : une chaine de caractère qui doit ressembler à un mail.
