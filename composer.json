@@ -1,0 +1,14 @@
+{
+    "name": "callmarl/form_manager",
+    "description": "A lightfull manager, for managing some form easily and quickly.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "CallMarl",
+            "email": "pahageek@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
