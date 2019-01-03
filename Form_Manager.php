@@ -1,15 +1,16 @@
 <?php
 
-namespace Form_manager;
+namespace Form_Manager;
 
-use Form_manager\Error_Manager;
-use Form_manager\Field\Date;
-use Form_manager\Field\Option;
-use Form_manager\Field\Password;
-use Form_manager\Field\Select;
-use Form_manager\Field\Submit;
-use Form_manager\Field\Text;
-use Form_manager\Field\Unknow;
+use Form_Manager\Manager_Trait;
+use Form_Manager\Error_Manager;
+use Form_Manager\Field\Date;
+use Form_Manager\Field\Option;
+use Form_Manager\Field\Password;
+use Form_Manager\Field\Select;
+use Form_Manager\Field\Submit;
+use Form_Manager\Field\Text;
+use Form_Manager\Field\Unknow;
 
 class Form_Manager
 {
@@ -28,7 +29,7 @@ class Form_Manager
     */
     private $error;
 
-    use Form_manager\Manager_Trait;
+    use Manager_Trait;
 
     public function __construct()
     {

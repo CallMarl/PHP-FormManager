@@ -1,10 +1,11 @@
 <?php
 
-namespace Form_manager;
+namespace Form_Manager;
 
-use Form_manager\Regex_Manager;
-use Form_manager\Control_Manager;
-use Form_manager\Error_Manager;
+use Form_Manager\Manager_Trait;
+use Form_Manager\Regex_Manager;
+use Form_Manager\Control_Manager;
+use Form_Manager\Error_Manager;
 
 abstract class Field_Manager
 {
@@ -39,7 +40,7 @@ abstract class Field_Manager
         */
         private $type;
 
-        use Form_manager\Manager_Trait;
+        use Manager_Trait;
 
         public function __construct($name)
         {
