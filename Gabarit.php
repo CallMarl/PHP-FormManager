@@ -2,7 +2,7 @@
 
 namespace Form_Manager;
 
-use Form_Manager\Form_manager;
+use Form_Manager\Form_Manager;
 
 Abstract class Gabarit extends Form_manager
 {
