@@ -45,7 +45,8 @@ abstract class Field_Manager
         public function __construct($name)
         {
             $this->name = $name;
-            $this->type = strtolower(end(explode("\\", get_class($this))));
+            $class_name = explode("\\", get_class($this));
+            $this->type = strtolower(end($class_name));
             $this->error = new Error_Manager("The field " . $this->name .
                                              " was modified");
             $this->add_attr("name", $this->name);
