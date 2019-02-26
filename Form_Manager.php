@@ -132,7 +132,7 @@ class Form_Manager
         {
             if (array_key_exists($key, $tmp_post))
             {
-                if($hard == TRUE && strcmp($tmp_post[$key], current($tmp_post)))
+                if($hard == TRUE && strcmp($tmp_post[$key], current($tmp_post)) != 0)
                 {
                     $this->error->set_faild();
                     $tmp = FALSE;
