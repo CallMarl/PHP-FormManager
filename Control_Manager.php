@@ -2,6 +2,8 @@
 
 namespace Form_Manager;
 
+use Form_Manager\Field_Manager;
+
 class Control_Manager
 {
     /**
@@ -9,7 +11,7 @@ class Control_Manager
     */
     private $control;
 
-    public function __construct($field, $control_name, $args = [])
+    public function __construct(Field_Manager $field, $control_name, $args = [])
     {
         $control_name = ucfirst(strtolower($control_name));
         if ($this->control_exist($control_name))

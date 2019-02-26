@@ -141,6 +141,13 @@ abstract class Field_Manager
             return (end($this->checker));
         }
 
+        public function add_checker($callback)
+        {
+            $checker = new Checker_Manager($this, $callback);
+            $this->checker[] = $checker;
+            return (end($this->checker));
+        }
+
         public function is_valid()
         {
             $no_error = TRUE;

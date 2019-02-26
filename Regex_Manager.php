@@ -2,6 +2,7 @@
 
 namespace Form_Manager;
 
+use Form_Manager\Field_Manager;
 use Form_Manager\Regex\Specific;
 
 class Regex_Manager
@@ -11,7 +12,7 @@ class Regex_Manager
     */
     private $regex;
 
-    public function __construct($field, $regex_name, $specific = FALSE)
+    public function __construct(Field_Manager $field, $regex_name, $specific = FALSE)
     {
         $regex_name = ucfirst(strtolower($regex_name));
         if ($this->regex_exist($regex_name) && $specific == FALSE)
@@ -20,9 +21,7 @@ class Regex_Manager
             $this->regex = new $regex_name($field);
         }
         else if ($specific == TRUE)
-        {
             $this->regex = new Specific($regex);
-        }
         else
         {
             #throw new exeption "Try to add $regex_name but this regex doesent exist"
