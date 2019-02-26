@@ -131,7 +131,7 @@ abstract class Field_Manager
         {
             $regex = new Regex_Manager($this, $regex, $specific);
             $this->checker[] = $regex;
-            return ($this);
+            return (end($this->checker));
         }
 
         public function add_control($control, $args = [])
