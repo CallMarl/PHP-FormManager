@@ -13,7 +13,7 @@ class Alpha extends Abstract_Regex
     public function is_valid()
     {
         if(!preg_match('/[^[:alpha:]\s-]/i',
-                        parent::get_field()->getAttr('value'))
+                        parent::get_field()->get_attr('value'))
           )
         {
             return FALSE;

@@ -11,9 +11,9 @@ class Submit extends Field_manager
     */
     public $name;
 
-    public function __construct($name)
+    public function __construct($name, $error)
     {
-        parent::__construct($name);
+        parent::__construct($name, $error);
         $this->name = $name;
         $this->set_attr("value", $name);
     }

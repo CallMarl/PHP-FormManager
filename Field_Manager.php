@@ -17,7 +17,7 @@ abstract class Field_Manager
         /**
         *   @var array
         */
-        private $attr = [];
+        protected $attr = [];
 
         /**
         *   @var bool
@@ -42,13 +42,12 @@ abstract class Field_Manager
 
         use Manager_Trait;
 
-        public function __construct($name)
+        public function __construct($name, $error)
         {
             $this->name = $name;
             $class_name = explode("\\", get_class($this));
             $this->type = strtolower(end($class_name));
-            $this->error = new Error_Manager("The field " . $this->name .
-                                             " was modified");
+            $this->error = $error;
             $this->add_attr("name", $this->name);
             $this->add_attr("type", $this->type);
             $this->persist();
@@ -57,6 +56,12 @@ abstract class Field_Manager
         public function get_name()
         {
             return ($this->name);
+        }
+
+        private function new_error()
+        {
+            $class = new \ReflectionClass(get_class($this->error));
+            return $class->newInstanceArgs([]);
         }
 
         public function get_attr($type)
@@ -75,15 +80,21 @@ abstract class Field_Manager
             return ($this);
         }
 
-        public function set_error($error_message)
+        public function set_error($error)
         {
-            $this->error = new Error_Manager($error_message);
+            $this->error = $this->new_error();
+            $this->error->set_error($error);
             return ($this);
         }
 
         public function unset_error()
         {
             unset($this->error);
+        }
+
+        public function get_error()
+        {
+            return ($this->error);
         }
 
         public function add_attr($html_attr, $value = NULL)
@@ -141,9 +152,9 @@ abstract class Field_Manager
             return (end($this->checker));
         }
 
-        public function add_checker($callback)
+        public function add_checker($checker)
         {
-            $checker = new Checker_Manager($this, $callback);
+            $checker = new Checker_Manager($this, $checker);
             $this->checker[] = $checker;
             return (end($this->checker));
         }
@@ -155,7 +166,7 @@ abstract class Field_Manager
             {
                 if (!$value->is_valid())
                 {
-                    $this->error = new Error_Manager($value->get_error());
+                    $this->error = $value->get_error();
                     $no_error = FALSE;
                     break ;
                 }
@@ -167,15 +178,9 @@ abstract class Field_Manager
             return ($no_error);
         }
 
-        public function get_error()
-        {
-            if (isset($this->error) && $this->error->is_faild())
-                return ($this->error->get_error());
-        }
-
         public function display_error()
         {
-            echo($this->get_error());
+            $this->error->display();
         }
 
         public function persist()

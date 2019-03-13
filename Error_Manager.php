@@ -5,6 +5,11 @@ namespace Form_Manager;
 class Error_Manager
 {
     /**
+    *   @var array
+    */
+    private $attr = [];
+
+    /**
     * @var string
     */
     private $error;
@@ -14,7 +19,9 @@ class Error_Manager
     */
     private $faild;
 
-    public function __construct($error)
+    use Manager_Trait;
+
+    public function __construct($error = NULL)
     {
         $this->error = $error;
         $this->faild = FALSE;
@@ -34,6 +41,27 @@ class Error_Manager
     {
         return ($this->error);
     }
+
+    public function set_error($error)
+    {
+        $this->error = $error;
+    }
+
+    public function add_attr($attr, $value = NULL)
+    {
+        $this->attr[$attr] = $value;
+        return ($this);
+    }
+
+    public function unset_attr($html_attr)
+    {
+        unset($this->attr[$html_attr]);
+    }
+
+     public function display()
+     {
+         echo ($this->get_error());
+     }
 }
 
 ?>

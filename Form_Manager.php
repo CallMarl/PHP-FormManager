@@ -10,6 +10,7 @@ use Form_Manager\Field\Password;
 use Form_Manager\Field\Select;
 use Form_Manager\Field\Submit;
 use Form_Manager\Field\Text;
+use Form_Manager\Field\Textarea;
 use Form_Manager\Field\Unknow;
 
 class Form_Manager
@@ -27,7 +28,7 @@ class Form_Manager
     /**
     *   @var Error_Manager
     */
-    private $error;
+    protected $error;
 
     use Manager_Trait;
 
@@ -45,6 +46,12 @@ class Form_Manager
         return ($this->var);
     }
 
+    private function new_error()
+    {
+        $class = new \ReflectionClass(get_class($this->error));
+        return $class->newInstanceArgs([]);
+    }
+
     private function add_field($name, $type)
     {
         if (array_key_exists($name, $this->fields))
@@ -56,7 +63,7 @@ class Form_Manager
     {
         $this->add_field($name, "date");
         $field_name = strtolower($name);
-        $this->$field_name = new Date($name);
+        $this->$field_name = new Date($name, $this->new_error());
         return ($this);
     }
 
@@ -64,7 +71,7 @@ class Form_Manager
     {
         $this->add_field($name, "option");
         $field_name = strtolower($name);
-        $this->$field_name = new Option($name);
+        $this->$field_name = new Option($name, $this->new_error());
         return ($this);
     }
 
@@ -72,7 +79,7 @@ class Form_Manager
     {
         $this->add_field($name, "password");
         $field_name = strtolower($name);
-        $this->$field_name = new Password($name);
+        $this->$field_name = new Password($name, $this->new_error());
         return ($this);
     }
 
@@ -80,7 +87,7 @@ class Form_Manager
     {
         $this->add_field($name, "select");
         $field_name = strtolower($name);
-        $this->$field_name = new Select($name);
+        $this->$field_name = new Select($name, $this->new_error());
         return ($this);
     }
 
@@ -88,7 +95,7 @@ class Form_Manager
     {
         $this->add_field($name, "submit");
         $field_name = strtolower($name);
-        $this->$field_name = new Submit($name);
+        $this->$field_name = new Submit($name, $this->new_error());
         return ($this);
     }
 
@@ -96,7 +103,23 @@ class Form_Manager
     {
         $this->add_field($name, "text");
         $field_name = strtolower($name);
-        $this->$field_name = new Text($name);
+        $this->$field_name = new Text($name, $this->new_error());
+        return ($this);
+    }
+
+    public function add_textarea($name)
+    {
+        $this->add_field($name, "textarea");
+        $field_name = strtolower($name);
+        $this->$field_name = new Textarea($name, $this->new_error());
+        return ($this);
+    }
+
+    public function add_button($name)
+    {
+        $this->add_field($name, "button");
+        $field_name = strtolower($name);
+        $this->$field_name = new Textarea($name, $this->new_error());
         return ($this);
     }
 
@@ -108,13 +131,14 @@ class Form_Manager
                                   . $type, 1);
         }
         $field_name = strtolower($name);
-        $this->$field_name = new Unknow($name, $type);
+        $this->$field_name = new Unknow($name, $type, $this->new_error());
         return ($this);
     }
 
     public function set_error($error)
     {
-        $this->error = new Error_Manager($error);
+        $this->error = $this->new_error();
+        $this->error->set_error($error);
         return ($this);
     }
 
@@ -169,6 +193,12 @@ class Form_Manager
         return ($this);
     }
 
+    public function add_attr($attr, $value)
+    {
+        $this->attr[$attr] = $value;
+        return ($this);
+    }
+
     public function start()
     {
         echo("<form " . $this->attr_to_string() . " >");
@@ -196,14 +226,8 @@ class Form_Manager
             $this->$key->display();
     }
 
-    public function get_error()
-    {
-        if (isset($this->error) && $this->error->is_faild())
-            return ($this->error->get_error());
-    }
-
     public function display_error()
     {
-        echo($this->get_error());
+        $this->error->display();
     }
 }

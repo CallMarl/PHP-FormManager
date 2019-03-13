@@ -27,15 +27,22 @@ abstract class Abstract_Regex
         return ($this->field);
     }
 
-    public function add_error($error)
+    private function new_error()
     {
-        $this->error = new Error_Manager($error);
+        $class = new \ReflectionClass(get_class($this->field->get_error()));
+        return $class->newInstanceArgs([]);
+    }
+
+    public function set_error($error)
+    {
+        $this->error = $this->new_error();
+        $this->error->set_error($error);
         return ($this->get_field());
     }
 
     public function get_error()
     {
-        return ($this->error->get_error());
+        return ($this->error);
     }
 
     abstract public function is_valid();

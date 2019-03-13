@@ -32,15 +32,22 @@ abstract class Abstract_Control
         $this->error->set_faild();
     }
 
+    private function new_error()
+    {
+        $class = new \ReflectionClass(get_class($this->field->get_error()));
+        return $class->newInstanceArgs([]);
+    }
+
     public function set_error($error)
     {
-        $this->error = new Error_Manager($error);
+        $this->error = $this->new_error();
+        $this->error->set_error($error);
         return ($this->get_field());
     }
 
     public function get_error()
     {
-        return ($this->error->get_error());
+        return ($this->error);
     }
 
     abstract public function is_valid();

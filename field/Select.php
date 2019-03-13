@@ -13,9 +13,9 @@ class Select extends Field_Manager
     */
     private $option = [];
 
-    public function __construct($name)
+    public function __construct($name, $error)
     {
-        parent::__construct($name);
+        parent::__construct($name, $error);
     }
 
     public function __get($name)
@@ -27,7 +27,7 @@ class Select extends Field_Manager
     public function add_option($option)
     {
         $option = strtolower($option);
-        $this->$option = new Option($option, $this);
+        $this->$option = new Option($option, $this->error, $this);
         $this->option[] = $option;
         return ($this->$option);
     }

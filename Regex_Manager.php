@@ -21,10 +21,10 @@ class Regex_Manager
             $this->regex = new $regex_name($field);
         }
         else if ($specific == TRUE)
-            $this->regex = new Specific($regex);
+            $this->regex = new Specific($field, $specific);
         else
         {
-            #throw new exeption "Try to add $regex_name but this regex doesent exist"
+            #throw new exeption "Try to add $regex_name but this regex type doesn't exist"
         }
     }
 
@@ -37,13 +37,18 @@ class Regex_Manager
         return (in_array($regex_name, $regex_list));
     }
 
-    public function add_error($error)
+    public function set_error($error)
     {
-        $this->regex->add_error($error);
+        return ($this->regex->set_error($error));
     }
 
-    public function is_valid($to_check)
+    public function get_error()
     {
-        return ($this->regex->is_valide($to_check));
+        return ($this->regex->get_error());
+    }
+
+    public function is_valid()
+    {
+        return ($this->regex->is_valid());
     }
 }

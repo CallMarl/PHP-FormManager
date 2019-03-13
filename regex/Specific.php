@@ -19,7 +19,7 @@ class Specific extends Abstract_Regex
 
     public function is_valid()
     {
-        if(!preg_match($this->regex, parent::get_field()->getAttr('value')))
+        if(!preg_match($this->regex, parent::get_field()->get_attr('value')))
             return FALSE;
         return TRUE;
     }

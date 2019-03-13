@@ -11,9 +11,9 @@ class Option extends Field_manager
     */
     private $field;
 
-    public function __construct($name, $field = NULL)
+    public function __construct($name, $error, $field = NULL)
     {
-        parent::__construct($name);
+        parent::__construct($name, $error);
         $this->field = $field;
         $this->add_attr("value", strtolower($name));
     }

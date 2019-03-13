@@ -6,16 +6,16 @@ use Form_Manager\Field_Manager;
 
 class Unknow extends Field_manager
 {
-    public function __construct($name, $type)
+    public function __construct($name, $error, $type)
     {
-        parent::__construct($name);
+        parent::__construct($name, $error);
         $this->type = $type;
-        $this->add_attr("type", $this->type);
+        $this->set_attr("type", $this->type);
     }
 
     public function set_attr($html_attr, $value = NULL)
     {
-        if (strcmp($html_attr, "name"))
+        if (!strcmp($html_attr, "name"))
         {
             throw new \Exception("You are not allow to change the
                                   field name from use the form_manger
