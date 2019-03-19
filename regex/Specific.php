@@ -11,6 +11,11 @@ class Specific extends Abstract_Regex
     */
     private $regex;
 
+    /**
+    *   Créer une nouvelle instance du regex définit par l'utilisateur
+    *
+    *   @param Field_Manager
+    */
     public function __construct($field, $regex)
     {
         parent::__construct($field);
@@ -20,7 +25,7 @@ class Specific extends Abstract_Regex
     public function is_valid()
     {
         if(!preg_match($this->regex, parent::get_field()->get_attr('value')))
-            return FALSE;
-        return TRUE;
+            return (FALSE);
+        return (TRUE);
     }
 }

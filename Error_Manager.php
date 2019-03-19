@@ -10,54 +10,66 @@ class Error_Manager
     private $attr = [];
 
     /**
-    * @var string
+    *   @var string
     */
     private $error;
 
     /**
-    * @var bool
+    *   @var bool
     */
-    private $faild;
+    private $active;
 
-    use Manager_Trait;
-
+    /**
+    *   Créer une nouvelle instance du gestionnaire d'erreur, par defaut
+    *   l'erreur n'est pas activé.
+    *
+    *   @param      string
+    */
     public function __construct($error = NULL)
     {
         $this->error = $error;
-        $this->faild = FALSE;
+        $this->active = FALSE;
     }
 
-    public function set_faild()
+    /**
+    *   Active l'erreur.
+    */
+    public function set_active()
     {
-        $this->faild = TRUE;
+        $this->active = TRUE;
     }
 
-    public function is_faild()
+    /**
+    *   Retourne le status de l'erreur, si elle ect active où non.
+    *
+    *   @return     string
+    */
+    public function is_active()
     {
-        return ($this->faild);
+        return ($this->active);
     }
 
-    public function get_error()
-    {
-        return ($this->error);
-    }
-
+    /**
+    *   Permet de modifier le message d'erreur associé au gestionnaire d'erreurs
+    */
     public function set_error($error)
     {
         $this->error = $error;
     }
 
-    public function add_attr($attr, $value = NULL)
+    /**
+    *   Retourne le message d'erreur
+    *
+    *   @return     string
+    */
+    public function get_error()
     {
-        $this->attr[$attr] = $value;
-        return ($this);
+        return ($this->error);
     }
 
-    public function unset_attr($html_attr)
-    {
-        unset($this->attr[$html_attr]);
-    }
-
+    /**
+    *   Affiche le message d'erreur.
+    */
      public function display()
      {
          echo ($this->get_error());

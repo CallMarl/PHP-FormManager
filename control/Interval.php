@@ -2,8 +2,8 @@
 
 namespace Form_Manager\Control;
 
-use Form_Manager\Field_Manager;
 use Form_Manager\Control\Abstract_Control;
+use Form_Manager\Field_Manager;
 
 class Interval extends Abstract_Control
 {
@@ -17,7 +17,14 @@ class Interval extends Abstract_Control
     */
     private $max;
 
-    public function __construct(Field_Manager $field, $args){
+    /**
+    *   Créer une nouvelle instance d'interval.
+    *
+    *   @param Field_Manager
+    *   @param array
+    */
+    public function __construct(Field_Manager $field, $args = [])
+    {
         parent::__construct($field);
         if(count($args) === 2)
         {
@@ -25,16 +32,25 @@ class Interval extends Abstract_Control
             $this->max = intval($args[1]);
         }
         else
-            throw new \Exception("For a Interval control you must spécifies min and max value in args.", 1);
-
+        {
+            throw new \Exception("
+                For a Interval control you must spécifies min and max value in
+                args.", 1
+            );
+        }
     }
 
+    /**
+    *   Fonction de validation de l'interval.
+    *
+    *   @return     boolean
+    */
     public function is_valid()
     {
-        $len = strlen(parent::get_field()->getAttr('value'));
+        $len = strlen(parent::get_field()->get_attr('value'));
         if($this->min <= $len && $len <= $this->max)
-            return TRUE;
-        return FALSE;
+            return (TRUE);
+        return (FALSE);
     }
 }
 

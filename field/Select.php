@@ -2,8 +2,8 @@
 
 namespace Form_Manager\Field;
 
-use Form_Manager\Field_Manager;
 use Form_manager\Error_Manager;
+use Form_Manager\Field_Manager;
 use Form_Manager\Field\Option;
 
 class Select extends Field_Manager
@@ -13,11 +13,21 @@ class Select extends Field_Manager
     */
     private $option = [];
 
+    /**
+    *   Créer une nouvelle instance du champs select.
+    *
+    *   @param      string
+    *   @param      Error_Manager
+    */
     public function __construct($name, $error)
     {
         parent::__construct($name, $error);
     }
 
+    /**
+    *   Permet de récupérer les option associé au champs en fonction de leur
+    *   nom.
+    */
     public function __get($name)
     {
         if (in_array($name, $this->option))
